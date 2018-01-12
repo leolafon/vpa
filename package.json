@@ -1,0 +1,19 @@
+{
+  "main": "node_modules/expo/AppEntry.js",
+  "private": true,
+  "dependencies": {
+    "expo": "^24.0.0",
+    "react": "16.0.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-24.0.0.tar.gz",
+    "react-native-keyboard-spacer": "^0.4.1",
+    "react-navigation": "^1.0.0-beta.25",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
+    "redux-saga": "^0.16.0"
+  },
+  "name": "vpa",
+  "version": "0.0.0",
+  "description": "Hello Expo!",
+  "author": null
+}
