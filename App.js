@@ -6,6 +6,10 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { Asset, AppLoading } from 'expo'
+import { Provider } from 'react-redux'
+
+import configureStore from './js/configureStore'
+import ReduxNavigation from './js/navigation/ReduxNavigation'
 
 
 /**
@@ -32,6 +36,7 @@ export default class App extends React.Component {
     super(props)
     this.state = {
       isReady: false,
+      store: configureStore(),
     }
   }
 
@@ -61,9 +66,9 @@ export default class App extends React.Component {
     }
 
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
+      <Provider store={this.state.store}>
+        <ReduxNavigation/>
+      </Provider>
     );
   }
 }
