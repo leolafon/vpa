@@ -4,9 +4,11 @@
  */
 
 import React from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
+
+import Button from '../components/Button'
 
 
 /**
@@ -18,12 +20,8 @@ class HomeView extends React.Component {
       <View style={styles.container}>
         <Text>Home view</Text>
         <Button
-          title='Test'
-          onPress={() => {
-            this.props.dispatch(NavigationActions.navigate({
-              routeName: 'test'
-            }))
-          }}
+          text='toto'
+          callback={() => console.warn('toto')}
         />
       </View>
     )
@@ -34,8 +32,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: 10,
   },
 })
 
