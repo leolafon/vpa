@@ -10,6 +10,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native'
+import PropTypes from 'prop-types'
 
 
 /**
@@ -17,7 +18,7 @@ import {
  *
  * @param {*} props
  */
-const Button = props =>
+const Button = props => (
   <TouchableOpacity
     style={props.style ? props.style : styles.defaultButton}
     onPress={props.callback}>
@@ -25,6 +26,12 @@ const Button = props =>
       {props.text}
     </Text>
   </TouchableOpacity>
+)
+
+Button.propTypes = {
+  callback: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired,
+}
 
 const styles = StyleSheet.create({
   defaultButton: {
