@@ -4,9 +4,10 @@
  */
 
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { Image } from 'react-native';
 import { Asset, AppLoading } from 'expo'
 import { Provider } from 'react-redux'
+import I18n from 'ex-react-native-i18n'
 
 import configureStore from './js/configureStore'
 import ReduxNavigation from './js/navigation/ReduxNavigation'
@@ -50,6 +51,7 @@ export default class App extends React.Component {
 
     await Promise.all([
       ...imageAssets,
+      I18n.initAsync(),
     ])
   }
 
@@ -72,12 +74,3 @@ export default class App extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

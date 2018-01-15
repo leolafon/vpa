@@ -7,6 +7,7 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
+import I18n from 'ex-react-native-i18n'
 
 import Button from '../components/Button'
 
@@ -18,13 +19,23 @@ class HomeView extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Home view</Text>
+        <Text>{I18n.t('greeting')}</Text>
         <Button
           text='toto'
           callback={() => console.warn('toto')}
         />
       </View>
     )
+  }
+}
+
+I18n.fallbacks = true
+I18n.translations = {
+  en: {
+    greeting: 'Hello!'
+  },
+  fr: {
+    greeting: 'Bonjour!'
   }
 }
 
