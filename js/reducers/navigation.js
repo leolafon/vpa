@@ -18,7 +18,7 @@ let initialState = RootNav.router.getStateForAction(
  * @param {*} state
  * @param {*} action
  */
-export const navReducer = (state = initialState, action) => {
+export const nav = (state = initialState, action) => {
   const newState = RootNav.router
     .getStateForAction(action, state)
 

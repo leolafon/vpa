@@ -5,12 +5,14 @@
 
 import { combineReducers } from 'redux'
 
-import { navReducer } from './navigation'
+import { nav } from './navigation'
+import { data } from './data'
 
 
 /**
  * Root reducer
  */
 export default combineReducers({
-  nav: navReducer,
+  nav,
+  data,
 })

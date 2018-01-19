@@ -4,13 +4,14 @@
  */
 
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, Platform } from 'react-native';
 import { Asset, AppLoading } from 'expo'
 import { Provider } from 'react-redux'
 import I18n from 'ex-react-native-i18n'
 
 import configureStore from './js/configureStore'
 import ReduxNavigation from './js/navigation/ReduxNavigation'
+import { initDB } from './js/api'
 
 
 /**
@@ -52,6 +53,7 @@ export default class App extends React.Component {
     await Promise.all([
       ...imageAssets,
       I18n.initAsync(),
+      initDB(),
     ])
   }
 

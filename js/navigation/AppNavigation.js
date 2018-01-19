@@ -5,9 +5,10 @@
 
 import React from 'react'
 import { StackNavigator } from 'react-navigation'
+import { Image, StatusBar } from 'react-native'
 
 import HomeView from '../views/HomeView'
-import TestView from '../views/TestView'
+import AddSupplierView from '../views/AddSupplierView'
 
 
 /**
@@ -15,11 +16,24 @@ import TestView from '../views/TestView'
  */
 const RootNav = StackNavigator({
   home: { screen: HomeView },
-  test: { screen: TestView },
+  addSupplier: { screen: AddSupplierView },
 }, {
-  headerMode: 'none',
   title: 'Main',
   initialRouteName: 'home',
+  navigationOptions: {
+    headerTitle: (
+      <Image
+        source={require('./../../assets/vpa.png')}
+        style={{
+          height: 30,
+          width: 90,
+          alignSelf: 'center',
+        }}/>
+    ),
+    headerStyle: {
+      paddingTop: StatusBar.currentHeight,
+    }
+  }
 })
 
 export default RootNav

@@ -18,17 +18,21 @@ import PropTypes from 'prop-types'
  *
  * @param {*} props
  */
-const Button = props =>
-  <TouchableOpacity
-    style={props.style || styles.defaultButton}
-    onPress={props.callback}>
-    <Text style={props.textStyle || styles.defaultText}>
-      {props.text}
-    </Text>
-  </TouchableOpacity>
+const Button = props => {
+  const { textStyle, style, text, ...otherProps } = props
+  return (
+    <TouchableOpacity
+      {...otherProps}
+      style={style || styles.defaultButton}>
+      <Text style={textStyle || styles.defaultText}>
+        {text}
+      </Text>
+    </TouchableOpacity>
+  )
+}
 
 Button.propTypes = {
-  callback: PropTypes.func.isRequired,
+  onPress: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired,
 }
 
