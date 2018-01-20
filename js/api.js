@@ -71,3 +71,39 @@ export function addSupplier({name, email, beginning, end}) {
     })
   })
 }
+
+export function editSupplier(id, data) {
+  console.log('editSupplier')
+  const { name, email, beginning, end } = data
+
+  return new Promise((resolve, reject) => {
+    db.transaction(tx => {
+      tx.executeSql(
+        `UPDATE suppliers
+          SET name = ?,
+              email = ?,
+              beginning = ?,
+              end = ?
+          WHERE id = ?`,
+        [name, email, beginning, end, id],
+        () => resolve(),
+        (_, error) => reject(error)
+      )
+    })
+  })
+}
+
+export function deleteRowById(table, id) {
+  console.log('delete row by id')
+
+  return new Promise((resolve, reject) => {
+    db.transaction(tx => {
+      tx.executeSql(
+        `DELETE FROM ${table} WHERE id = ${id};`,
+        [],
+        () => resolve(),
+        (_, error) => reject(error)
+      )
+    })
+  })
+}

@@ -9,6 +9,7 @@ import {
   Text,
   View,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
@@ -50,14 +51,21 @@ class HomeView extends React.Component {
   }
 
   renderSuppliers() {
-    return this.props.data.suppliers.map((supplier, index) => (
-      <View
+    const { data, navigation } = this.props
+
+    return data.suppliers.map((supplier, index) => (
+      <TouchableOpacity
         key={index}
-        style={styles.suppliers}>
+        style={styles.suppliers}
+        onPress={() => {
+          navigation.navigate('supplier', {
+            supplierId: supplier.id
+          })
+        }}>
         <Text>
           {supplier.name}
         </Text>
-      </View>
+      </TouchableOpacity>
     ))
   }
 
@@ -92,14 +100,32 @@ class HomeView extends React.Component {
 I18n.fallbacks = true
 I18n.translations = {
   'en': {
+    continue: 'Continue',
+    cancel: 'Cancel',
+    yes: 'Yes',
+    no: 'No',
     addSupplier: 'Add supplier',
     addSupplierSuccess: 'Supplier added successfuly',
-    addSupplierFailure: 'Unable to add supplier'
+    addSupplierFailure: 'Unable to add supplier',
+    editSupplierSuccess: 'Supplier edited successfuly',
+    editSupplierFailure: 'Unable to edit supplier',
+    deleteSupplierWarning: 'Are you sure you want to delete this supplier ?',
+    deleteSupplierSuccess: 'Supplier deleted successfuly',
+    deleteSupplierFailure: 'Unable to delete supplier',
   },
   'fr': {
+    continue: 'Continuer',
+    cancel: 'Annuler',
+    yes: 'Oui',
+    no: 'Non',
     addSupplier: 'Ajouter un fournisseur',
     addSupplierSuccess: 'Fournisseur ajouté avec succès',
-    addSupplierFailure: 'Impossible d\'ajouter le fournisseur'
+    addSupplierFailure: 'Impossible d\'ajouter le fournisseur',
+    editSupplierSuccess: 'Fournisseur modifié avec succès',
+    editSupplierFailure: 'Impossible de modifier le fournisseur',
+    deleteSupplierWarning: 'Etes-vous sûr de vouloir suppimer ce fournisseur ?',
+    deleteSupplierSuccess: 'Fournisseur supprimé avec succès',
+    deleteSupplierFailure: 'Impossible de supprimer le fournisseur',
   },
   'ja-JP': {
     addSupplier: '業者を追加',

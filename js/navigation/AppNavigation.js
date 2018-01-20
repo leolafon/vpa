@@ -9,6 +9,8 @@ import { Image, StatusBar } from 'react-native'
 
 import HomeView from '../views/HomeView'
 import AddSupplierView from '../views/AddSupplierView'
+import SupplierView from '../views/SupplierView'
+import EditSupplierView from '../views/EditSupplierView'
 
 
 /**
@@ -17,6 +19,8 @@ import AddSupplierView from '../views/AddSupplierView'
 const RootNav = StackNavigator({
   home: { screen: HomeView },
   addSupplier: { screen: AddSupplierView },
+  supplier: { screen: SupplierView },
+  editSupplier: { screen: EditSupplierView },
 }, {
   title: 'Main',
   initialRouteName: 'home',

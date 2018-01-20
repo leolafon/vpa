@@ -19,12 +19,23 @@ import PropTypes from 'prop-types'
  * @param {*} props
  */
 const Button = props => {
-  const { textStyle, style, text, ...otherProps } = props
+  const {
+    textStyle,
+    style,
+    text,
+    reversed,
+    ...otherProps
+  } = props
+
   return (
     <TouchableOpacity
       {...otherProps}
-      style={style || styles.defaultButton}>
-      <Text style={textStyle || styles.defaultText}>
+      style={style || (reversed
+        ? styles.reversedButton
+        : styles.defaultButton)}>
+      <Text style={textStyle || (reversed
+          ? styles.reversedText
+          : styles.defaultText)}>
         {text}
       </Text>
     </TouchableOpacity>
@@ -42,9 +53,22 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#61A8BA',
+  },
+  reversedButton: {
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 10,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#61A8BA',
   },
   defaultText: {
     color: 'white',
+  },
+  reversedText: {
+    color: '#61A8BA',
   }
 })
 
