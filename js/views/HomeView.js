@@ -53,6 +53,16 @@ class HomeView extends React.Component {
   renderSuppliers() {
     const { data, navigation } = this.props
 
+    if (data.suppliers.length === 0) {
+      return (
+        <View style={{ flex: 1, alignItems: 'center' }}>
+          <Text>
+            {I18n.t('noSuppliers')}
+          </Text>
+        </View>
+      )
+    }
+
     return data.suppliers.map((supplier, index) => (
       <TouchableOpacity
         key={index}
@@ -104,6 +114,7 @@ I18n.translations = {
     cancel: 'Cancel',
     yes: 'Yes',
     no: 'No',
+    noSuppliers: 'You have not registered any supplier yet...',
     addSupplier: 'Add supplier',
     addSupplierSuccess: 'Supplier added successfuly',
     addSupplierFailure: 'Unable to add supplier',
@@ -118,6 +129,7 @@ I18n.translations = {
     cancel: 'Annuler',
     yes: 'Oui',
     no: 'Non',
+    noSuppliers: 'Vous n\'avez pas encore enregistrer de fournisseur...',
     addSupplier: 'Ajouter un fournisseur',
     addSupplierSuccess: 'Fournisseur ajouté avec succès',
     addSupplierFailure: 'Impossible d\'ajouter le fournisseur',
