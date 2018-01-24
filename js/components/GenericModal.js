@@ -51,7 +51,6 @@ const GenericModal = props => {
             <Button
               text='OK'
               onPress={() => {
-                hideModal()
                 if (success && successCallback) {
                   successCallback()
                 } else if (!success && errorCallback) {

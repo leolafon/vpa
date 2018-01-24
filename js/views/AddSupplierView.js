@@ -9,6 +9,7 @@ import {
   Text,
   View,
   ScrollView,
+  StatusBar,
 } from 'react-native'
 import I18n from 'ex-react-native-i18n'
 import KeyboardSpacer from 'react-native-keyboard-spacer'
@@ -66,6 +67,7 @@ class AddSupplierView extends React.Component {
               .then(() => {
                 this.setState({ isReady: true })
                 this.props.dispatch(NavigationActions.back())
+                this.hideModal()
               })
           }}
         />

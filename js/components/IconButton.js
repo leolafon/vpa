@@ -19,18 +19,22 @@ import { FontAwesome } from '@expo/vector-icons'
  */
 const IconButton = props => {
   const { name, size, color, ...buttonProps } = props
-  const { style, mergeStyle, ...other } = buttonProps
+  const { style, mergeStyle, reversed, ...other } = buttonProps
+
+  const actualStyle = reversed
+    ? styles.reversedButton
+    : styles.defaultButton
 
   return (
     <TouchableOpacity
       style={mergeStyle
-        ? [style, styles.defaultButton]
-        : (style || styles.defaultButton)}
+        ? [style, actualStyle]
+        : (style || actualStyle)}
       {...other}>
       <FontAwesome
         name={name}
         size={size || 20}
-        color={color || 'white'}
+        color={color || (reversed ? '#61A8BA' : 'white')}
       />
     </TouchableOpacity>
   )
@@ -47,6 +51,16 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     padding: 10,
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#61A8BA',
+  },
+  reversedButton: {
+    backgroundColor: 'white',
+    borderRadius: 50,
+    padding: 10,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#61A8BA',
   }
 })
 

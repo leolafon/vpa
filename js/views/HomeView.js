@@ -46,6 +46,15 @@ class HomeView extends React.Component {
         })
       })
       .then(() => {
+        return getTable('products')
+      })
+      .then(items => {
+        this.props.dispatch({
+          type: 'FETCH_PRODUCTS',
+          products: items
+        })
+      })
+      .then(() => {
         this.setState({ isReady: true })
       })
   }
@@ -115,6 +124,7 @@ I18n.translations = {
     yes: 'Yes',
     no: 'No',
     noSuppliers: 'You have not registered any supplier yet...',
+    noProducts: 'No products associated with this supplier yet...',
     addSupplier: 'Add supplier',
     addSupplierSuccess: 'Supplier added successfuly',
     addSupplierFailure: 'Unable to add supplier',
@@ -130,6 +140,7 @@ I18n.translations = {
     yes: 'Oui',
     no: 'Non',
     noSuppliers: 'Vous n\'avez pas encore enregistrer de fournisseur...',
+    noProducts: 'Vous n\'avez pas encore associer de produits à ce fournisseur...',
     addSupplier: 'Ajouter un fournisseur',
     addSupplierSuccess: 'Fournisseur ajouté avec succès',
     addSupplierFailure: 'Impossible d\'ajouter le fournisseur',
