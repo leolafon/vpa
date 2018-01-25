@@ -17,23 +17,28 @@ import EditSupplierView from '../views/EditSupplierView'
  * Root navigator off the app
  */
 const RootNav = StackNavigator({
-  home: { screen: HomeView },
-  addSupplier: { screen: AddSupplierView },
-  supplier: { screen: SupplierView },
-  editSupplier: { screen: EditSupplierView },
+  home: {
+    screen: HomeView,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Home',
+    })
+  },
+  addSupplier: {
+    screen: AddSupplierView
+  },
+  supplier: {
+    screen: SupplierView,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Supplier',
+    })
+  },
+  editSupplier: {
+    screen: EditSupplierView
+  },
 }, {
   title: 'Main',
   initialRouteName: 'home',
   navigationOptions: {
-    headerTitle: (
-      <Image
-        source={require('./../../assets/vpa.png')}
-        style={{
-          height: 30,
-          width: 90,
-          alignSelf: 'center',
-        }}/>
-    ),
     headerStyle: {
       paddingTop: StatusBar.currentHeight,
     }

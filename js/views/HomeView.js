@@ -10,6 +10,7 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
+  Image,
 } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
@@ -96,6 +97,18 @@ class HomeView extends React.Component {
 
     return (
       <View style={styles.container}>
+        <View style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          <Image
+            style={{
+              height: 100,
+              width: 280,
+              resizeMode: 'contain',
+            }}
+            source={require('../../assets/vpa.png')} />
+        </View>
         <ScrollView>
           <View style={styles.suppliersContainer}>
             {this.renderSuppliers()}
@@ -113,45 +126,6 @@ class HomeView extends React.Component {
         </View>
       </View>
     )
-  }
-}
-
-I18n.fallbacks = true
-I18n.translations = {
-  'en': {
-    continue: 'Continue',
-    cancel: 'Cancel',
-    yes: 'Yes',
-    no: 'No',
-    noSuppliers: 'You have not registered any supplier yet...',
-    noProducts: 'No products associated with this supplier yet...',
-    addSupplier: 'Add supplier',
-    addSupplierSuccess: 'Supplier added successfuly',
-    addSupplierFailure: 'Unable to add supplier',
-    editSupplierSuccess: 'Supplier edited successfuly',
-    editSupplierFailure: 'Unable to edit supplier',
-    deleteSupplierWarning: 'Are you sure you want to delete this supplier ?',
-    deleteSupplierSuccess: 'Supplier deleted successfuly',
-    deleteSupplierFailure: 'Unable to delete supplier',
-  },
-  'fr': {
-    continue: 'Continuer',
-    cancel: 'Annuler',
-    yes: 'Oui',
-    no: 'Non',
-    noSuppliers: 'Vous n\'avez pas encore enregistrer de fournisseur...',
-    noProducts: 'Vous n\'avez pas encore associer de produits à ce fournisseur...',
-    addSupplier: 'Ajouter un fournisseur',
-    addSupplierSuccess: 'Fournisseur ajouté avec succès',
-    addSupplierFailure: 'Impossible d\'ajouter le fournisseur',
-    editSupplierSuccess: 'Fournisseur modifié avec succès',
-    editSupplierFailure: 'Impossible de modifier le fournisseur',
-    deleteSupplierWarning: 'Etes-vous sûr de vouloir suppimer ce fournisseur ?',
-    deleteSupplierSuccess: 'Fournisseur supprimé avec succès',
-    deleteSupplierFailure: 'Impossible de supprimer le fournisseur',
-  },
-  'ja-JP': {
-    addSupplier: '業者を追加',
   }
 }
 
