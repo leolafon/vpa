@@ -74,13 +74,13 @@ class AddSupplierView extends React.Component {
         <ScrollView>
           <View style={styles.formContainer}>
             <LabelTextInput
-              label='Name'
+              label={I18n.t('name')}
               onChangeText={(text) => {
                 this.setState({ name: text })
               }}
             />
             <LabelTextInput
-              label='Email'
+              label={I18n.t('email')}
               autoCapitalize='none'
               keyboardType='email-address'
               onChangeText={(text) => {
@@ -88,13 +88,13 @@ class AddSupplierView extends React.Component {
               }}
             />
             <LabelTextInput
-              label='Beginning of message'
+              label={I18n.t('beginning')}
               onChangeText={(text) => {
                 this.setState({ beginning: text })
               }}
             />
             <LabelTextInput
-              label='End of message'
+              label={I18n.t('end')}
               onChangeText={(text) => {
                 this.setState({ end: text })
               }}

@@ -42,19 +42,49 @@ class SupplierView extends React.Component {
       formVisible: false,
       isReady: false,
       newProduct: {},
-      products: [],
+      productsArray: [],
       categories: [],
     }
   }
 
   componentWillMount() {
+    this.updateProducts()
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (!this.state.isReady
+      || nextState.modalVisible
+      || nextState.formVisible) {
+      return
+    }
+    this.updateProducts()
+  }
+
+  deepCompare(obj1, obj2) {
+    return JSON.stringify(obj1) === JSON.stringify(obj2)
+  }
+
+  updateProducts() {
+    console.log('update products')
     const { supplierId } = this.props.navigation.state.params
     getProductsOfSupplierSorted(supplierId, 'category')
       .then(result => {
-        this.setState({ products: result.items })
+        if (this.deepCompare(result.items, this.state.productsArray)) {
+          return null
+        }
+        this.setState({
+          isReady: false,
+          productsArray: result.items
+        })
         return getCategoriesOfProductsBySupplier(supplierId)
       })
       .then(result => {
+        if (result === null) {
+          if (!this.state.isReady) {
+            this.setState({ isReady: true })
+          }
+          return null
+        }
         this.setState({
           categories: result.items,
           isReady: true,
@@ -79,7 +109,7 @@ class SupplierView extends React.Component {
   }
 
   renderProducts() {
-    if (this.state.products.length === 0) {
+    if (this.state.productsArray.length === 0) {
       return (
         <View style={{ flex: 1, alignItems: 'center' }}>
           <Text>
@@ -112,12 +142,16 @@ class SupplierView extends React.Component {
   }
 
   renderProductsByCategory(category) {
-    return this.state.products
+    return this.state.productsArray
       .filter(product => product.category === category.category)
       .map((product, index) => {
         return (
           <TouchableOpacity
-            onPress={() => {}}
+            onPress={() => {
+              this.props.navigation.navigate('product', {
+                productId: product.id
+              })
+            }}
             key={`p${index}`}
             style={{
               borderBottomWidth: 1,
@@ -138,7 +172,7 @@ class SupplierView extends React.Component {
     }
 
     const { supplierId } = this.props.navigation.state.params
-    const supplier = this.props.data.suppliers.find((item) => {
+    const supplier = this.props.suppliers.find((item) => {
       return item.id === supplierId
     }) || {}
 
@@ -228,13 +262,10 @@ class SupplierView extends React.Component {
             <View style={styles.productsList}>
               <Text style={{
                 color: '#61A8BA',
-                fontSize: 20,
+                fontSize: 25,
               }}>
                 Products
               </Text>
-              <View style={{ marginTop: 10 }}>
-                {this.renderProducts()}
-              </View>
             </View>
             <View>
               <IconButton
@@ -245,6 +276,9 @@ class SupplierView extends React.Component {
                 onPress={() => this.showForm()}
               />
             </View>
+          </View>
+          <View>
+            {this.renderProducts()}
           </View>
         </ScrollView>
         <View style={{
@@ -270,7 +304,7 @@ const styles = StyleSheet.create({
   supplier: {
     flex: 1,
     flexDirection: 'row',
-    paddingBottom: 25,
+    paddingBottom: 5,
   },
   supplierData: {
     flex: 1,
@@ -284,6 +318,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     marginRight: 10,
+    justifyContent: 'center',
   },
   formContainer: {
     flex: 1,
@@ -297,7 +332,8 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => ({
-  data: state.data,
+  products: state.data.products,
+  suppliers: state.data.suppliers,
 })
 
 export default connect(mapStateToProps)(SupplierView)

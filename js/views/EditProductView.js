@@ -4,126 +4,116 @@
  */
 
 import React from 'react'
+import I18n from 'ex-react-native-i18n'
+import { connect } from 'react-redux'
 import {
   StyleSheet,
   View,
   Text,
   ScrollView,
-  Modal,
 } from 'react-native'
-import I18n from 'ex-react-native-i18n'
-import KeyboarSpacer from 'react-native-keyboard-spacer'
-import { connect } from 'react-redux'
 
-import LabelTextInput from '../components/LabelTextInput'
 import Button from '../components/Button'
 import GenericModal from '../components/GenericModal'
-import Spinner from '../components/Spinner'
-import { addProduct, getTable } from '../api'
+import LabelTextInput from '../components/LabelTextInput'
+import { getTable, editProduct } from '../api'
 
 
-/**
- *
- */
-class AddProductView extends React.Component {
-  constructor(props) {
+class EditProductView extends React.Component {
+  constructor(props) {
     super(props)
+
+    const { product } = this.props
     this.state = {
-      isReady: true,
+      name: product.name,
+      category: product.category,
+      reference: product.reference,
       success: false,
-      modalMessage: '',
       modalVisible: false,
+      modalMessage: '',
     }
   }
 
-  closeModal() {
-    this.setState({ modalVisible: false })
+  toggleModal(value) {
+    this.setState({ modalVisible: value })
   }
 
-  openModal() {
-    this.setState({ modalVisible: true })
-  }
+  render() {
+    const { product } = this.props
 
-  render() {
     return (
       <View style={styles.container}>
         <GenericModal
           success={this.state.success}
           visible={this.state.modalVisible}
           message={this.state.modalMessage}
-          onRequestClose={() => this.closeModal()}
+          onRequestClose={() => this.toggleModal(false)}
           successCallback={() => {
             getTable('products')
               .then(items => {
                 this.props.dispatch({
                   type: 'FETCH_PRODUCTS',
-                  products: items
+                  products: items,
                 })
-              })
-              .then(() => {
                 this.props.close()
               })
           }}
+          errorCallback={() => this.toggleModal(false)}
         />
-        <View style={styles.header}>
-          <Text style={styles.title}>
-            New product
-          </Text>
-        </View>
         <ScrollView>
-          <View style={styles.form}>
+          <View style={styles.formContainer}>
             <LabelTextInput
-              label={I18n.t('name')}
+              label='Name'
+              value={this.state.name}
               onChangeText={(text) => {
                 this.setState({ name: text })
               }}
             />
             <LabelTextInput
-              label={I18n.t('category')}
+              label='Category'
+              value={this.state.category}
               onChangeText={(text) => {
                 this.setState({ category: text })
               }}
             />
             <LabelTextInput
-              label={I18n.t('reference')}
+              label='Reference'
+              value={this.state.reference}
               onChangeText={(text) => {
                 this.setState({ reference: text })
               }}
             />
           </View>
         </ScrollView>
-        <View style={styles.footer}>
-          <View style={[styles.buttonWrapper, { marginRight: 5 }]}>
+        <View style={styles.buttonContainer}>
+          <View style={[styles.buttonWrapper, { marginRight: 10 }]}>
             <Button
               text={I18n.t('continue')}
               onPress={() => {
-                addProduct(this.props.supplierId, this.state)
+                editProduct(product.id, this.state)
                   .then(() => {
-                    this.setState({ 
+                    this.setState({
                       success: true,
                       modalVisible: true,
-                      modalMessage: I18n.t('addProductSuccess')
+                      modalMessage: I18n.t('editProductSuccess')
                     })
-                    console.log(this.state)
                   })
-                  .catch((err) => {
-                    console.warn(err)
+                  .catch((error) => {
+                    console.warn(error)
                     this.setState({
                       success: false,
                       modalVisible: true,
-                      modalMessage: I18n.t('addProductFailure')
+                      modalMessage: I18n.t('editProductFailure')
                     })
                   })
               }}
             />
           </View>
-          <View style={[styles.buttonWrapper, { marginLeft: 5 }]}>
+          <View style={[styles.buttonWrapper, { marginLeft: 10 }]}>
             <Button
               text={I18n.t('cancel')}
               reversed={true}
-              onPress={() => {
-                this.props.close()
-              }}
+              onPress={() => this.props.close()}
             />
           </View>
         </View>
@@ -139,24 +129,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 40,
   },
-  header: {
-    marginBottom: 30,
-  },
-  title: {
-    color: '#61A8BA',
-    alignSelf: 'center',
-    fontSize: 20,
-  },
-  form: {
+  formContainer: {
     flex: 1,
   },
-  footer: {
+  buttonContainer: {
+    marginTop: 30,
     flexDirection: 'row',
-    marginTop: 10,
   },
-  buttonWrapper: {
+  buttonWrapper: {
     flex: 1,
   }
 })
 
-export default connect()(AddProductView)
+export default connect()(EditProductView)

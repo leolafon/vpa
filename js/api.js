@@ -127,6 +127,26 @@ export function addProduct(suppliderId, data) {
   })
 }
 
+export function editProduct(id, data) {
+  console.log('editProduct')
+  const { name, category, reference } = data
+
+  return new Promise((resolve, reject) => {
+    db.transaction(tx => {
+      tx.executeSql(
+        `UPDATE products
+          SET name = ?,
+              category = ?,
+              reference = ?
+          WHERE id = ?`,
+        [name, category, reference, id],
+        () => resolve(),
+        (_, error) => reject(error)
+      )
+    })
+  })
+}
+
 export function getProductsOfSupplierSorted(supplierId, columnToSort) {
   return new Promise((resolve, reject) => {
     db.transaction(tx => {
