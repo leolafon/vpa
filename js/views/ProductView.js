@@ -30,7 +30,6 @@ class ProductView extends React.Component {
     super(props)
     this.state = {
       modalVisible: false,
-      formVisible: false,
     }
   }
 
@@ -42,17 +41,10 @@ class ProductView extends React.Component {
     this.setState({ modalVisible: false })
   }
 
-  openForm() {
-    this.setState({ formVisible: true })
-  }
-
-  closeForm() {
-    this.setState({ formVisible: false })
-  }
-
   render() {
-    const product = this.props.products.find(item => {
-      return item.id === this.props.navigation.state.params.productId
+    const { navigation, dispatch, products } = this.props
+    const product = products.find(item => {
+      return item.id === navigation.state.params.productId
     })
 
     if (!product) {
@@ -61,15 +53,6 @@ class ProductView extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Modal
-          visible={this.state.formVisible}
-          animationType='fade'
-          transparent={false}
-          onRequestClose={() => this.closeForm()}>
-          <EditProductView
-            product={product}
-            close={() => this.closeForm()}/>
-        </Modal>
         <ChoiceModal
           visible={this.state.modalVisible}
           message={I18n.t('deleteProductWarning')}
@@ -83,11 +66,11 @@ class ProductView extends React.Component {
               .then(() => {
                 getTable('products')
                   .then(items => {
-                    this.props.dispatch({
+                    dispatch({
                       type: 'FETCH_PRODUCTS',
                       products: items,
                     })
-                    this.props.dispatch(NavigationActions.back())
+                    dispatch(NavigationActions.back())
                     this.closeModal()
                   })
               })
@@ -116,7 +99,11 @@ class ProductView extends React.Component {
             <IconButton
               name='edit'
               size={30}
-              onPress={() => this.openForm()}
+              onPress={() => {
+                navigation.navigate('editProduct', {
+                  product: product
+                })
+              }}
             />
             <IconButton
               name='remove'

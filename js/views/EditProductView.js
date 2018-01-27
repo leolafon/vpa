@@ -12,6 +12,7 @@ import {
   Text,
   ScrollView,
 } from 'react-native'
+import { NavigationActions } from 'react-navigation'
 
 import Button from '../components/Button'
 import GenericModal from '../components/GenericModal'
@@ -23,7 +24,7 @@ class EditProductView extends React.Component {
   constructor(props) {
     super(props)
 
-    const { product } = this.props
+    const { product } = this.props.navigation.state.params
     this.state = {
       name: product.name,
       category: product.category,
@@ -39,7 +40,8 @@ class EditProductView extends React.Component {
   }
 
   render() {
-    const { product } = this.props
+    const { dispatch, navigation } = this.props
+    const { product } = navigation.state.params
 
     return (
       <View style={styles.container}>
@@ -51,11 +53,12 @@ class EditProductView extends React.Component {
           successCallback={() => {
             getTable('products')
               .then(items => {
-                this.props.dispatch({
+                dispatch({
                   type: 'FETCH_PRODUCTS',
                   products: items,
                 })
-                this.props.close()
+                this.toggleModal(false)
+                dispatch(NavigationActions.back())
               })
           }}
           errorCallback={() => this.toggleModal(false)}
@@ -113,7 +116,9 @@ class EditProductView extends React.Component {
             <Button
               text={I18n.t('cancel')}
               reversed={true}
-              onPress={() => this.props.close()}
+              onPress={() => {
+                dispatch(NavigationActions.back())
+              }}
             />
           </View>
         </View>

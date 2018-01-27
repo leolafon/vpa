@@ -53,8 +53,7 @@ class SupplierView extends React.Component {
 
   componentWillUpdate(nextProps, nextState) {
     if (!this.state.isReady
-      || nextState.modalVisible
-      || nextState.formVisible) {
+      || nextState.modalVisible) {
       return
     }
     this.updateProducts()
@@ -96,16 +95,8 @@ class SupplierView extends React.Component {
     this.setState({ modalVisible: false })
   }
 
-  hideForm() {
-    this.setState({ formVisible: false })
-  }
-
   showModal() {
     this.setState({ modalVisible: true })
-  }
-
-  showForm() {
-    this.setState({ formVisible: true })
   }
 
   renderProducts() {
@@ -171,10 +162,12 @@ class SupplierView extends React.Component {
       return <Spinner/>
     }
 
-    const { supplierId } = this.props.navigation.state.params
+    const { navigation, dispatch } = this.props
+    const { supplierId } = navigation.state.params
     const supplier = this.props.suppliers.find((item) => {
       return item.id === supplierId
     }) || {}
+
 
     return (
       <View style={styles.container}>
@@ -192,11 +185,11 @@ class SupplierView extends React.Component {
               .then(() => {
                 getTable('suppliers')
                   .then(items => {
-                    this.props.dispatch(NavigationActions.back())
+                    dispatch(NavigationActions.back())
                     return items
                   })
                   .then(items => {
-                    this.props.dispatch({
+                    dispatch({
                       type: 'FETCH_SUPPLIERS',
                       suppliers: items,
                     })
@@ -209,16 +202,6 @@ class SupplierView extends React.Component {
               })
           }}
         />
-        <Modal
-          visible={this.state.formVisible}
-          animationType='fade'
-          transparent={false}
-          onRequestClose={() => this.hideForm()}>
-          <AddProductView
-            close={() => this.hideForm()}
-            supplierId={supplierId}
-          />
-        </Modal>
         <ScrollView contentContainerStyle={{padding: 30}}>
           <View style={styles.supplier}>
             <View style={styles.supplierData}>
@@ -244,7 +227,7 @@ class SupplierView extends React.Component {
                 name='edit'
                 size={30}
                 onPress={() => {
-                  this.props.navigation.navigate('editSupplier', {
+                  navigation.navigate('editSupplier', {
                     supplier: supplier
                   })
                 }}
@@ -273,7 +256,11 @@ class SupplierView extends React.Component {
                 size={30}
                 style={{ width: 50 }}
                 mergeStyle={true}
-                onPress={() => this.showForm()}
+                onPress={() => {
+                  navigation.navigate('addProduct', {
+                    supplierId: supplier.id
+                  })
+                }}
               />
             </View>
           </View>
@@ -288,7 +275,13 @@ class SupplierView extends React.Component {
           <Button
             text='New order'
             reversed={true}
-            onPress={() => {}}
+            onPress={() => {
+              navigation.navigate('order', {
+                categories: this.state.categories,
+                products: this.state.productsArray,
+                supplier: supplier,
+              })
+            }}
           />
         </View>
       </View>

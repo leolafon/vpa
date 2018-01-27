@@ -8,11 +8,14 @@ import I18n from 'ex-react-native-i18n'
 import { StackNavigator } from 'react-navigation'
 import { Image, StatusBar } from 'react-native'
 
+import AddProductView from '../views/AddProductView'
 import HomeView from '../views/HomeView'
 import AddSupplierView from '../views/AddSupplierView'
 import SupplierView from '../views/SupplierView'
 import EditSupplierView from '../views/EditSupplierView'
 import ProductView from '../views/ProductView'
+import OrderView from '../views/OrderView'
+import EditProductView from '../views/EditProductView';
 
 
 /**
@@ -26,7 +29,10 @@ const RootNav = StackNavigator({
     })
   },
   addSupplier: {
-    screen: AddSupplierView
+    screen: AddSupplierView,
+    navigationOptions: () => ({
+      title: I18n.t('addSupplier')
+    })
   },
   supplier: {
     screen: SupplierView,
@@ -35,12 +41,33 @@ const RootNav = StackNavigator({
     })
   },
   editSupplier: {
-    screen: EditSupplierView
+    screen: EditSupplierView,
+    navigationOptions: ({ navigation }) => ({
+      title: `${I18n.t('edit')} ${navigation.state.params.supplier.name}`
+    })
+  },
+  addProduct: {
+    screen: AddProductView,
+    navigationOptions: ({ navigation }) =>({
+      title: I18n.t('addProduct')
+    })
   },
   product: {
     screen: ProductView,
     navigationOptions: ({ navigation }) => ({
       title: I18n.t('product'),
+    })
+  },
+  editProduct: {
+    screen: EditProductView,
+    navigationOptions: ({ navigation }) => ({
+      title: `${I18n.t('edit')} ${navigation.state.params.product.name}`
+    })
+  },
+  order: {
+    screen: OrderView,
+    navigationOptions: ({ navigation }) => ({
+      title: I18n.t('order'),
     })
   }
 }, {

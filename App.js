@@ -80,6 +80,7 @@ export default class App extends React.Component {
 I18n.fallbacks = true
 I18n.translations = {
   'en': {
+    order: 'Order',
     name: 'Name',
     email: 'Email',
     beginning: 'Beginning of message',
@@ -93,8 +94,13 @@ I18n.translations = {
     cancel: 'Cancel',
     yes: 'Yes',
     no: 'No',
+    edit: 'Edit',
+    sendOrder: 'Send order',
     noSuppliers: 'You have not registered any supplier yet...',
     noProducts: 'No products associated with this supplier yet...',
+    addProduct: 'Add product',
+    addProductSuccess: 'Product added successfuly',
+    addProductFailure: 'Unable to add product',
     addSupplier: 'Add supplier',
     addSupplierSuccess: 'Supplier added successfuly',
     addSupplierFailure: 'Unable to add supplier',
@@ -108,6 +114,7 @@ I18n.translations = {
     editProductFailure: 'Unable to edited product',
   },
   'fr': {
+    order: 'Commande',
     name: 'Nom',
     email: 'Email',
     beginning: 'Début de message',
@@ -121,8 +128,13 @@ I18n.translations = {
     cancel: 'Annuler',
     yes: 'Oui',
     no: 'Non',
+    edit: 'Modifier',
+    sendOrder: 'Commander',
     noSuppliers: 'Vous n\'avez pas encore enregistrer de fournisseur...',
     noProducts: 'Vous n\'avez pas encore associer de produits à ce fournisseur...',
+    addProduct: 'Ajouter un produit',
+    addProductSuccess: 'Produit ajouté avec succès',
+    addProductFailure: 'Impossible d\'ajouter le produit',
     addSupplier: 'Ajouter un fournisseur',
     addSupplierSuccess: 'Fournisseur ajouté avec succès',
     addSupplierFailure: 'Impossible d\'ajouter le fournisseur',

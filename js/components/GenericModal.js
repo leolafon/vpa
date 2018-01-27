@@ -30,7 +30,7 @@ const GenericModal = props => {
   } = props
   return (
     <Modal
-      animationType='slide'
+      animationType='none'
       transparent={true}
       {...modalProps}>
       <View style={styles.outter}>

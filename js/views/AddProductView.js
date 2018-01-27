@@ -12,7 +12,7 @@ import {
   Modal,
 } from 'react-native'
 import I18n from 'ex-react-native-i18n'
-import KeyboarSpacer from 'react-native-keyboard-spacer'
+import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 
 import LabelTextInput from '../components/LabelTextInput'
@@ -45,6 +45,8 @@ class AddProductView extends React.Component {
   }
 
   render() {
+    const { navigation, dispatch } = this.props
+
     return (
       <View style={styles.container}>
         <GenericModal
@@ -55,21 +57,18 @@ class AddProductView extends React.Component {
           successCallback={() => {
             getTable('products')
               .then(items => {
-                this.props.dispatch({
+                dispatch({
                   type: 'FETCH_PRODUCTS',
                   products: items
                 })
+                this.closeModal()
+                dispatch(NavigationActions.back())
               })
-              .then(() => {
-                this.props.close()
+              .catch(error => {
+                console.warn(error)
               })
           }}
         />
-        <View style={styles.header}>
-          <Text style={styles.title}>
-            New product
-          </Text>
-        </View>
         <ScrollView>
           <View style={styles.form}>
             <LabelTextInput
@@ -97,7 +96,8 @@ class AddProductView extends React.Component {
             <Button
               text={I18n.t('continue')}
               onPress={() => {
-                addProduct(this.props.supplierId, this.state)
+                const { supplierId } = navigation.state.params
+                addProduct(supplierId, this.state)
                   .then(() => {
                     this.setState({ 
                       success: true,
@@ -122,7 +122,7 @@ class AddProductView extends React.Component {
               text={I18n.t('cancel')}
               reversed={true}
               onPress={() => {
-                this.props.close()
+                dispatch(NavigationActions.back())
               }}
             />
           </View>
@@ -138,14 +138,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     padding: 40,
-  },
-  header: {
-    marginBottom: 30,
-  },
-  title: {
-    color: '#61A8BA',
-    alignSelf: 'center',
-    fontSize: 20,
   },
   form: {
     flex: 1,
