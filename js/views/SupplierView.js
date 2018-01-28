@@ -63,7 +63,6 @@ class SupplierView extends React.Component {
   }
 
   updateProducts() {
-    console.log('update products')
     const { supplierId } = this.props.navigation.state.params
     getProductsOfSupplierSorted(supplierId, 'category')
       .then(result => {
@@ -160,13 +159,14 @@ class SupplierView extends React.Component {
     if (!this.state.isReady) {
       return <Spinner/>
     }
-
     const { navigation, dispatch } = this.props
     const { supplierId } = navigation.state.params
     const supplier = this.props.suppliers.find((item) => {
       return item.id === supplierId
-    }) || {}
-
+    })
+    if (!supplier) {
+      return <Spinner/>
+    }
 
     return (
       <View style={styles.container}>
@@ -184,15 +184,12 @@ class SupplierView extends React.Component {
               .then(() => {
                 getTable('suppliers')
                   .then(items => {
-                    dispatch(NavigationActions.back())
-                    return items
-                  })
-                  .then(items => {
                     dispatch({
                       type: 'FETCH_SUPPLIERS',
                       suppliers: items,
                     })
                     this.hideModal()
+                    dispatch(NavigationActions.back())
                   })
               })
               .catch(error => {

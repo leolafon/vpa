@@ -35,10 +35,10 @@ class OrderView extends React.Component {
 
     this.state.products.forEach((product, index) => {
       if (this.state.counts[index] > 0) {
-        body += `${this.state.counts[index]} ${product.name}\n\n`
+        body += `${this.state.counts[index]} ${product.name}\n`
       }
     })
-    body += supplier.end
+    body += `\n${supplier.end}`
 
     return body
   }
@@ -97,7 +97,9 @@ class OrderView extends React.Component {
             }}>
               <View style={{ flex: 1, justifyContent: 'center' }}>
                 <Text>
-                  {`${product.name} - ${product.reference}`}
+                  {product.reference
+                    ? `${product.name} - ${product.reference}`
+                    : product.name}
                 </Text>
               </View>
               <View style={{ justifyContent: 'center', padding: 10, }}>

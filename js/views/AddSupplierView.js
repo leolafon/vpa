@@ -90,12 +90,16 @@ class AddSupplierView extends React.Component {
             />
             <LabelTextInput
               label={I18n.t('beginning')}
+              multiline={true}
+              autoGrow={true}
               onChangeText={(text) => {
                 this.setState({ beginning: text })
               }}
             />
             <LabelTextInput
               label={I18n.t('end')}
+              multiline={true}
+              autoGrow={true}
               onChangeText={(text) => {
                 this.setState({ end: text })
               }}
