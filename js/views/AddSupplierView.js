@@ -70,6 +70,7 @@ class AddSupplierView extends React.Component {
                 this.hideModal()
               })
           }}
+          errorCallback={() => this.hideModal()}
         />
         <ScrollView>
           <View style={styles.formContainer}>

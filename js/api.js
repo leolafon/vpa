@@ -62,11 +62,18 @@ export function getTable(table) {
 
 export function addSupplier({name, email, beginning, end}) {
   console.log('addSupplier')
+  const defaultBeginning = 'Bonjour,'
+  const defaultEnd = 'Cordialement,'
   return new Promise((resolve, reject) => {
     db.transaction(tx => {
       tx.executeSql(
-        `INSERT INTO suppliers (name, email) VALUES (?, ?);`,
-        [name, email],
+        `INSERT INTO suppliers
+          VALUES (NULL, ?, ?, ?, ?);`, [
+          name,
+          email,
+          beginning || defaultBeginning,
+          end || defaultEnd
+        ],
         () => resolve(),
         (_, error) => reject(error)
       )

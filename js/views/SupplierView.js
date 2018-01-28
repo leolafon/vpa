@@ -39,7 +39,6 @@ class SupplierView extends React.Component {
     super(props)
     this.state = {
       modalVisible: false,
-      formVisible: false,
       isReady: false,
       newProduct: {},
       productsArray: [],

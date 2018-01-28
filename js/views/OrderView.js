@@ -31,14 +31,14 @@ class OrderView extends React.Component {
 
   formatMailBody() {
     const { supplier } = this.props.navigation.state.params
-    let body = `${supplier.beginning},\n`
+    let body = `${supplier.beginning}\n\n`
 
     this.state.products.forEach((product, index) => {
       if (this.state.counts[index] > 0) {
-        body += `${this.state.counts[index]}x ${product.name}\n`
+        body += `${this.state.counts[index]} ${product.name}\n\n`
       }
     })
-    body += `\n${supplier.end}`
+    body += supplier.end
 
     return body
   }
