@@ -21,7 +21,8 @@ import Spinner from '../components/Spinner'
 import {
   initDB,
   getTable,
-  addSupplier
+  addSupplier,
+  dropTable,
 } from '../api'
 
 

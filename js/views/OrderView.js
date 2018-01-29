@@ -43,11 +43,28 @@ class OrderView extends React.Component {
     return body
   }
 
+  linkToEmail() {
+    const { supplier } = this.props.navigation.state.params
+    Linking.openURL(
+      `mailto:${supplier.email}`
+      + `?subject=${I18n.t('order')}`
+      + `&body=${this.formatMailBody()}`
+    )
+  }
+
+  linkToSMS() {
+    const { supplier } = this.props.navigation.state.params
+    Linking.openURL(
+      `sms:${supplier.phone}`
+      + `?body=${this.formatMailBody()}`
+    )
+  }
+
   renderCategories() {
     if (!this.state.categories.map) {
       return (
-        <View>
-          <Text>toto</Text>
+        <View style={styles.container}>
+          <Text>. . .</Text>
         </View>
       )
     }
@@ -56,12 +73,8 @@ class OrderView extends React.Component {
       return (
         <View
           key={`c${index}`}
-          style={{ flex: 1, marginTop: 10, }}>
-          <View style={{
-            backgroundColor: '#61A8BA',
-            flex: 1,
-            padding: 10,
-          }}>
+          style={styles.categoryContainer}>
+          <View style={styles.categoryHeader}>
             <Text style={{ color: 'white'}}>
               {category}
             </Text>
@@ -85,24 +98,16 @@ class OrderView extends React.Component {
         return (
           <View
             key={`p${index}`}
-            style={{
-              flex: 1,
-              borderBottomWidth: 1,
-              paddingLeft: 20,
-              paddingVertical: 5,
-            }}>
-            <View style={{
-              flex: 1,
-              flexDirection: 'row',
-            }}>
-              <View style={{ flex: 1, justifyContent: 'center' }}>
+            style={styles.productContainer}>
+            <View style={styles.productRow}>
+              <View style={styles.productDisplay}>
                 <Text>
                   {product.reference
                     ? `${product.name} - ${product.reference}`
                     : product.name}
                 </Text>
               </View>
-              <View style={{ justifyContent: 'center', padding: 10, }}>
+              <View style={styles.counterText}>
                 <Text>
                   {this.state.counts[trueIndex]}
                 </Text>
@@ -142,25 +147,53 @@ class OrderView extends React.Component {
       })
   }
 
+  renderButtons() {
+    const { supplier } = this.props.navigation.state.params
+
+    if (supplier.email && supplier.phone) {
+      return (
+        <View style={styles.buttonInner}>
+          <View style={{ flex: 1, marginRight: 5, }}>
+            <Button
+              text={I18n.t('sms')}
+              onPress={() => this.linkToSMS()}
+            />
+          </View>
+          <View style={{ flex: 1, marginLeft: 5, }}>
+            <Button
+              text={I18n.t('email')}
+              reversed={true}
+              onPress={() => this.linkToEmail()}
+            />
+          </View>
+        </View>
+      )
+    }
+
+    return (
+      <Button
+        text={I18n.t('sendOrder')}
+        onPress={() => {
+          if (supplier.email && !supplier.phone) {
+            this.linkToEmail()
+          } else if (supplier.phone && !supplier.email) {
+            this.linkToSMS()
+          }
+        }}
+      />
+    )
+  }
+
   render() {
     const { supplier } = this.props.navigation.state.params
 
     return (
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={{ padding: 30 }}>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
           {this.renderCategories()}
         </ScrollView>
-        <View style={{ paddingHorizontal: 30, paddingVertical: 10, }}>
-          <Button
-            text={I18n.t('sendOrder')}
-            onPress={() => {
-              Linking.openURL(
-                `mailto:${supplier.email}`
-                + `?subject=${I18n.t('order')}`
-                + `&body=${this.formatMailBody()}`
-              )
-            }}
-          />
+        <View style={styles.buttonOutter}>
+          {this.renderButtons()}
         </View>
       </View>
     )
@@ -172,7 +205,44 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     justifyContent: 'center',
-  }
+  },
+  scrollContainer: {
+    padding: 30,
+  },
+  buttonOutter: {
+    paddingHorizontal: 30,
+    paddingVertical: 15,
+  },
+  buttonInner: {
+    flexDirection: 'row',
+  },
+  counterText: {
+    justifyContent: 'center',
+    padding: 10,
+  },
+  productDisplay: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  productContainer: {
+    flex: 1,
+    borderBottomWidth: 1,
+    paddingLeft: 20,
+    paddingVertical: 5,
+  },
+  productRow: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  categoryContainer: {
+    flex: 1,
+    marginTop: 10,
+  },
+  categoryHeader: {
+    backgroundColor: '#61A8BA',
+    flex: 1,
+    padding: 10,
+  },
 })
 
 export default OrderView

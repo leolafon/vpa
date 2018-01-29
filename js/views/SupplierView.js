@@ -202,19 +202,23 @@ class SupplierView extends React.Component {
           <View style={styles.supplier}>
             <View style={styles.supplierData}>
               <DataRow
-                label='Name'
+                label={I18n.t('name')}
                 value={supplier.name}
               />
               <DataRow
-                label='Email'
-                value={supplier.email}
+                label={I18n.t('email')}
+                value={supplier.email || 'N/A'}
               />
               <DataRow
-                label='Beginning of message'
+                label={I18n.t('phone')}
+                value={supplier.phone || 'N/A'}
+              />
+              <DataRow
+                label={I18n.t('beginning')}
                 value={supplier.beginning}
               />
               <DataRow
-                label='End of message'
+                label={I18n.t('end')}
                 value={supplier.end}
               />
             </View>
@@ -269,9 +273,12 @@ class SupplierView extends React.Component {
           paddingVertical: 10,
         }}>
           <Button
-            text='New order'
-            reversed={true}
+            text={I18n.t('order')}
             onPress={() => {
+              if (this.state.productsArray.length === 0) {
+                return
+              }
+
               navigation.navigate('order', {
                 categories: this.state.categories,
                 products: this.state.productsArray,

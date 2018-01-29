@@ -89,6 +89,14 @@ class AddSupplierView extends React.Component {
               }}
             />
             <LabelTextInput
+              label={I18n.t('phone')}
+              autoCapitalize='none'
+              keyboardType='phone-pad'
+              onChangeText={(text) => {
+                this.setState({ phone: text })
+              }}
+            />
+            <LabelTextInput
               label={I18n.t('beginning')}
               multiline={true}
               autoGrow={true}

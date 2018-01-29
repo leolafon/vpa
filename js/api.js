@@ -15,7 +15,8 @@ export function initDB() {
         `CREATE TABLE IF NOT EXISTS suppliers(
           id          INTEGER PRIMARY KEY,
           name        TEXT NOT NULL,
-          email       TEXT NOT NULL,
+          email       TEXT,
+          phone       TEXT,
           beginning   TEXT NOT NULL DEFAULT 'Bonjour,',
           end         TEXT NOT NULL DEFAULT 'Cordialement,'
         );`,
@@ -60,7 +61,7 @@ export function getTable(table) {
   })
 }
 
-export function addSupplier({name, email, beginning, end}) {
+export function addSupplier({name, email, phone, beginning, end}) {
   console.log('addSupplier')
   const defaultBeginning = 'Bonjour,'
   const defaultEnd = 'Cordialement,'
@@ -68,9 +69,10 @@ export function addSupplier({name, email, beginning, end}) {
     db.transaction(tx => {
       tx.executeSql(
         `INSERT INTO suppliers
-          VALUES (NULL, ?, ?, ?, ?);`, [
+          VALUES (NULL, ?, ?, ?, ?, ?);`, [
           name,
-          email,
+          email || '',
+          phone || '',
           beginning || defaultBeginning,
           end || defaultEnd
         ],
@@ -83,7 +85,7 @@ export function addSupplier({name, email, beginning, end}) {
 
 export function editSupplier(id, data) {
   console.log('editSupplier')
-  const { name, email, beginning, end } = data
+  const { name, email, phone, beginning, end } = data
 
   return new Promise((resolve, reject) => {
     db.transaction(tx => {
@@ -91,10 +93,11 @@ export function editSupplier(id, data) {
         `UPDATE suppliers
           SET name = ?,
               email = ?,
+              phone = ?,
               beginning = ?,
               end = ?
           WHERE id = ?`,
-        [name, email, beginning, end, id],
+        [name, email, phone, beginning, end, id],
         () => resolve(),
         (_, error) => reject(error)
       )
@@ -178,6 +181,19 @@ export function getCategoriesOfProductsBySupplier(supplierId) {
           ORDER BY category;`,
         [],
         (_, { rows: { _array }}) => resolve({ items: _array }),
+        (_, error) => reject(error)
+      )
+    })
+  })
+}
+
+export function dropTable(table) {
+  return new Promise((resolve, reject) => {
+    db.transaction(tx => {
+      tx.executeSql(
+        `DROP TABLE ${table}`,
+        [],
+        () => resolve(),
         (_, error) => reject(error)
       )
     })

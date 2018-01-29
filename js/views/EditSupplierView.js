@@ -36,6 +36,7 @@ class EditSupplierView extends React.Component {
       success: false,
       name: supplier.name,
       email: supplier.email,
+      phone: supplier.phone,
       beginning: supplier.beginning,
       end: supplier.end,
     }
@@ -74,18 +75,19 @@ class EditSupplierView extends React.Component {
                 this.props.dispatch(NavigationActions.back())
               })
           }}
+          errorCallback={() => this.hideModal()}
         />
         <ScrollView>
           <View style={styles.formContainer}>
             <LabelTextInput
-              label='Name'
+              label={I18n.t('name')}
               value={this.state.name}
               onChangeText={(text) => {
                 this.setState({ name: text })
               }}
             />
             <LabelTextInput
-              label='Email'
+              label={I18n.t('email')}
               value={this.state.email}
               autoCapitalize='none'
               keyboardType='email-address'
@@ -94,14 +96,23 @@ class EditSupplierView extends React.Component {
               }}
             />
             <LabelTextInput
-              label='Beginning of message'
+              label={I18n.t('phone')}
+              value={this.state.phone}
+              autoCapitalize='none'
+              keyboardType='phone-pad'
+              onChangeText={(text) => {
+                this.setState({ phone: text })
+              }}
+            />
+            <LabelTextInput
+              label={I18n.t('beginning')}
               value={this.state.beginning}
               onChangeText={(text) => {
                 this.setState({ beginning: text })
               }}
             />
             <LabelTextInput
-              label='End of message'
+              label={I18n.t('end')}
               value={this.state.end}
               onChangeText={(text) => {
                 this.setState({ end: text })
@@ -111,7 +122,7 @@ class EditSupplierView extends React.Component {
         </ScrollView>
         <View style={styles.buttonContainer}>
           <Button
-            text='OK'
+            text={I18n.t('continue')}
             onPress={() => {
               editSupplier(supplier.id, this.state)
                 .then(() => {
