@@ -12,11 +12,15 @@ import {
   StyleSheet,
   Linking,
 } from 'react-native'
+import { connect } from 'react-redux'
 
 import Button from '../components/Button'
 import IconButton from '../components/IconButton'
 
 
+/**
+ *
+ */
 class OrderView extends React.Component {
   constructor(props) {
     super(props)
@@ -29,6 +33,9 @@ class OrderView extends React.Component {
     }
   }
 
+  /**
+   *
+   */
   formatMailBody() {
     const { supplier } = this.props.navigation.state.params
     let body = `${supplier.beginning}\n\n`
@@ -43,23 +50,33 @@ class OrderView extends React.Component {
     return body
   }
 
+  /**
+   *
+   */
   linkToEmail() {
     const { supplier } = this.props.navigation.state.params
-    Linking.openURL(
+
+    return Linking.openURL(
       `mailto:${supplier.email}`
-      + `?subject=${I18n.t('order')}`
+      + `?subject=${supplier.subject || ''}`
       + `&body=${this.formatMailBody()}`
-    )
+    ).then(() => this.props.navigation.navigate('home'))
   }
 
+  /**
+   *
+   */
   linkToSMS() {
     const { supplier } = this.props.navigation.state.params
     Linking.openURL(
       `sms:${supplier.phone}`
       + `?body=${this.formatMailBody()}`
-    )
+    ).then(() => this.props.navigation.navigate('home'))
   }
 
+  /**
+   *
+   */
   renderCategories() {
     if (!this.state.categories.map) {
       return (
@@ -87,6 +104,10 @@ class OrderView extends React.Component {
     })
   }
 
+  /**
+   *
+   * @param {*} category
+   */
   renderProductsByCategory(category) {
     return this.state.products
       .filter(product => product.category === category)
@@ -147,6 +168,9 @@ class OrderView extends React.Component {
       })
   }
 
+  /**
+   *
+   */
   renderButtons() {
     const { supplier } = this.props.navigation.state.params
 
@@ -184,6 +208,9 @@ class OrderView extends React.Component {
     )
   }
 
+  /**
+   *
+   */
   render() {
     const { supplier } = this.props.navigation.state.params
 
@@ -245,4 +272,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default OrderView
+export default connect()(OrderView)
