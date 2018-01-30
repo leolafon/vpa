@@ -66,8 +66,8 @@ class AddSupplierView extends React.Component {
               })
               .then(() => {
                 this.setState({ isReady: true })
-                this.props.dispatch(NavigationActions.back())
                 this.hideModal()
+                this.props.dispatch(NavigationActions.back())
               })
           }}
           errorCallback={() => this.hideModal()}

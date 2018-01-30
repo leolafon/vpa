@@ -71,6 +71,7 @@ class EditSupplierView extends React.Component {
                 })
               })
               .then(() => {
+                this.hideModal()
                 this.setState({ isReady: true })
                 this.props.dispatch(NavigationActions.back())
               })
