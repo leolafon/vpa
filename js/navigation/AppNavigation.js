@@ -43,7 +43,9 @@ const RootNav = StackNavigator({
   editSupplier: {
     screen: EditSupplierView,
     navigationOptions: ({ navigation }) => ({
-      title: `${I18n.t('edit')} ${navigation.state.params.supplier.name}`
+      title: I18n.locale === 'ja-JP'
+        ? `${navigation.state.params.supplier.name}を${I18n.t('edit')}`
+        : `${I18n.t('edit')} ${navigation.state.params.supplier.name}`
     })
   },
   addProduct: {
@@ -61,7 +63,9 @@ const RootNav = StackNavigator({
   editProduct: {
     screen: EditProductView,
     navigationOptions: ({ navigation }) => ({
-      title: `${I18n.t('edit')} ${navigation.state.params.product.name}`
+      title: I18n.locale === 'ja-JP'
+        ? `${navigation.state.params.product.name}を${I18n.t('edit')}`
+        : `${I18n.t('edit')} ${navigation.state.params.product.name}`
     })
   },
   order: {
