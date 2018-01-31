@@ -22,7 +22,6 @@ import {
   initDB,
   getTable,
   addSupplier,
-  dropTable,
 } from '../api'
 
 

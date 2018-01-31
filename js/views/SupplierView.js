@@ -214,6 +214,10 @@ class SupplierView extends React.Component {
                 value={supplier.phone || 'N/A'}
               />
               <DataRow
+                label={I18n.t('subject')}
+                value={supplier.subject || 'N/A'}
+              />
+              <DataRow
                 label={I18n.t('beginning')}
                 value={supplier.beginning}
               />

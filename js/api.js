@@ -17,6 +17,7 @@ export function initDB() {
           name        TEXT NOT NULL,
           email       TEXT,
           phone       TEXT,
+          subject     TEXT,
           beginning   TEXT NOT NULL DEFAULT 'Bonjour,',
           end         TEXT NOT NULL DEFAULT 'Cordialement,'
         );`,
@@ -61,18 +62,20 @@ export function getTable(table) {
   })
 }
 
-export function addSupplier({name, email, phone, beginning, end}) {
+export function addSupplier(data) {
   console.log('addSupplier')
+  const { name, email, phone, subject, beginning, end } = data
   const defaultBeginning = 'Bonjour,'
   const defaultEnd = 'Cordialement,'
   return new Promise((resolve, reject) => {
     db.transaction(tx => {
       tx.executeSql(
         `INSERT INTO suppliers
-          VALUES (NULL, ?, ?, ?, ?, ?);`, [
+          VALUES (NULL, ?, ?, ?, ?, ?, ?);`, [
           name,
           email || '',
           phone || '',
+          subject || '',
           beginning || defaultBeginning,
           end || defaultEnd
         ],
@@ -85,7 +88,7 @@ export function addSupplier({name, email, phone, beginning, end}) {
 
 export function editSupplier(id, data) {
   console.log('editSupplier')
-  const { name, email, phone, beginning, end } = data
+  const { name, email, phone, subject, beginning, end } = data
 
   return new Promise((resolve, reject) => {
     db.transaction(tx => {
@@ -94,10 +97,11 @@ export function editSupplier(id, data) {
           SET name = ?,
               email = ?,
               phone = ?,
+              subject = ?,
               beginning = ?,
               end = ?
           WHERE id = ?`,
-        [name, email, phone, beginning, end, id],
+        [name, email, phone, subject, beginning, end, id],
         () => resolve(),
         (_, error) => reject(error)
       )
@@ -192,6 +196,20 @@ export function dropTable(table) {
     db.transaction(tx => {
       tx.executeSql(
         `DROP TABLE ${table}`,
+        [],
+        () => resolve(),
+        (_, error) => reject(error)
+      )
+    })
+  })
+}
+
+export function addColumnToTable(table, column) {
+  return new Promise((resolve, reject) => {
+    db.transaction(tx => {
+      tx.executeSql(
+        `ALTER TABLE ${table}
+          ADD COLUMN subject text;`,
         [],
         () => resolve(),
         (_, error) => reject(error)

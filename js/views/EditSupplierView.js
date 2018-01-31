@@ -37,6 +37,7 @@ class EditSupplierView extends React.Component {
       name: supplier.name,
       email: supplier.email,
       phone: supplier.phone,
+      subject: supplier.subject,
       beginning: supplier.beginning,
       end: supplier.end,
     }
@@ -103,6 +104,13 @@ class EditSupplierView extends React.Component {
               keyboardType='phone-pad'
               onChangeText={(text) => {
                 this.setState({ phone: text })
+              }}
+            />
+            <LabelTextInput
+              label={I18n.t('subject')}
+              value={this.state.subject}
+              onChangeText={(text) => {
+                this.setState({ subject: text })
               }}
             />
             <LabelTextInput

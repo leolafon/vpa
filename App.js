@@ -77,6 +77,12 @@ export default class App extends React.Component {
   }
 }
 
+
+//
+// I18N Translations
+//
+
+
 I18n.fallbacks = true
 I18n.translations = {
   'en': {
@@ -85,6 +91,7 @@ I18n.translations = {
     email: 'Email',
     sms: 'SMS',
     phone: 'Phone',
+    subject: 'Subject of message',
     beginning: 'Beginning of message',
     end: 'End of message',
     category: 'Category',
@@ -121,6 +128,7 @@ I18n.translations = {
     email: 'Email',
     sms: 'SMS',
     phone: 'Téléphone',
+    subject: 'Objet du message',
     beginning: 'Début de message',
     end: 'Fin de message',
     category: 'Catégorie',
@@ -157,6 +165,7 @@ I18n.translations = {
     email: 'メール',
     sms: 'メッセージ',
     phone: '電話',
+    subject: 'メールの題記',
     beginning: 'メールの始まり',
     end: 'メールの終わり',
     category: 'カテゴリー',
