@@ -8,7 +8,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Modal,
   ScrollView,
   TouchableOpacity,
 } from 'react-native'
@@ -16,12 +15,10 @@ import { connect } from 'react-redux'
 import I18n from 'ex-react-native-i18n'
 import { NavigationActions } from 'react-navigation'
 
-import AddProductView from './AddProductView'
 import Button from '../components/Button'
 import ChoiceModal from '../components/ChoiceModal'
 import DataRow from '../components/DataRow'
 import IconButton from '../components/IconButton'
-import LabelTextInput from '../components/LabelTextInput'
 import Spinner from '../components/Spinner'
 import {
   deleteRowById,
