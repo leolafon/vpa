@@ -115,6 +115,7 @@ class EditSupplierView extends React.Component {
             />
             <LabelTextInput
               label={I18n.t('beginning')}
+              multiline={true}
               value={this.state.beginning}
               onChangeText={(text) => {
                 this.setState({ beginning: text })
@@ -122,6 +123,7 @@ class EditSupplierView extends React.Component {
             />
             <LabelTextInput
               label={I18n.t('end')}
+              multiline={true}
               value={this.state.end}
               onChangeText={(text) => {
                 this.setState({ end: text })

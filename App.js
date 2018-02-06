@@ -165,7 +165,7 @@ I18n.translations = {
     email: 'メール',
     sms: 'メッセージ',
     phone: '電話',
-    subject: 'メールの題記',
+    subject: 'メールの件名',
     beginning: 'メールの始まり',
     end: 'メールの終わり',
     category: 'カテゴリー',
