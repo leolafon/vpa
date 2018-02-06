@@ -75,9 +75,9 @@ export function addSupplier(data) {
           name,
           email || '',
           phone || '',
-          subject || '',
           beginning || defaultBeginning,
-          end || defaultEnd
+          end || defaultEnd,
+          subject || '',
         ],
         () => resolve(),
         (_, error) => reject(error)
