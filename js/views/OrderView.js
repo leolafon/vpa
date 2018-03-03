@@ -11,6 +11,7 @@ import {
   ScrollView,
   StyleSheet,
   Linking,
+  Platform,
 } from 'react-native'
 import { connect } from 'react-redux'
 
@@ -69,8 +70,8 @@ class OrderView extends React.Component {
   linkToSMS() {
     const { supplier } = this.props.navigation.state.params
     Linking.openURL(
-      `sms:${supplier.phone}`
-      + `?body=${this.formatMailBody()}`
+      `sms:${supplier.phone}${Platform.OS === 'ios' ? '&' : '?'}`
+      + `body=${this.formatMailBody()}`
     ).then(() => this.props.navigation.navigate('home'))
   }
 
