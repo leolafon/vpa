@@ -116,6 +116,7 @@ class EditSupplierView extends React.Component {
             <LabelTextInput
               label={I18n.t('beginning')}
               multiline={true}
+              textArea={true}
               value={this.state.beginning}
               onChangeText={(text) => {
                 this.setState({ beginning: text })
@@ -124,6 +125,7 @@ class EditSupplierView extends React.Component {
             <LabelTextInput
               label={I18n.t('end')}
               multiline={true}
+              textArea={true}
               value={this.state.end}
               onChangeText={(text) => {
                 this.setState({ end: text })
@@ -166,13 +168,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     justifyContent: 'center',
-    padding: 40,
+    paddingHorizontal: 20,
   },
   formContainer: {
     flex: 1,
   },
   buttonContainer: {
-    marginTop: 30,
+    marginTop: 20,
+    marginBottom: 20,
   }
 })
 

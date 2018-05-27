@@ -132,13 +132,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     justifyContent: 'center',
-    padding: 40,
+    paddingHorizontal: 20,
   },
   formContainer: {
     flex: 1,
   },
   buttonContainer: {
-    marginTop: 30,
+    marginTop: 20,
+    marginBottom: 20,
     flexDirection: 'row',
   },
   buttonWrapper: {

@@ -131,6 +131,9 @@ class SupplierView extends React.Component {
     return this.state.productsArray
       .filter(product => product.category === category.category)
       .map((product, index) => {
+        const refString = product.reference
+          ? ` - ${product.reference}`
+          : ''
         return (
           <TouchableOpacity
             onPress={() => {
@@ -145,7 +148,7 @@ class SupplierView extends React.Component {
               paddingVertical: 5,
             }}>
             <Text>
-              {product.name}
+              {`${product.name}${refString}`}
             </Text>
           </TouchableOpacity>
         )
@@ -195,7 +198,10 @@ class SupplierView extends React.Component {
               })
           }}
         />
-        <ScrollView contentContainerStyle={{padding: 30}}>
+        <ScrollView contentContainerStyle={{
+          paddingHorizontal: 20,
+          paddingTop: 10,
+        }}>
           <View style={styles.supplier}>
             <View style={styles.supplierData}>
               <DataRow
@@ -270,7 +276,7 @@ class SupplierView extends React.Component {
           </View>
         </ScrollView>
         <View style={{
-          paddingHorizontal: 30,
+          paddingHorizontal: 20,
           paddingVertical: 10,
         }}>
           <Button

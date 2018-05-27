@@ -43,7 +43,10 @@ class OrderView extends React.Component {
 
     this.state.products.forEach((product, index) => {
       if (this.state.counts[index] > 0) {
-        body += `${this.state.counts[index]} ${product.name}\n`
+        const ref = product.reference
+          ? ` - ${product.reference}`
+          : ''
+        body += `${this.state.counts[index]} ${product.name}${ref}\n`
       }
     })
     body += `\n${supplier.end}`

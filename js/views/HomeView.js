@@ -76,7 +76,9 @@ class HomeView extends React.Component {
     return data.suppliers.map((supplier, index) => (
       <TouchableOpacity
         key={index}
-        style={styles.suppliers}
+        style={[styles.suppliers, {
+          borderTopWidth: index === 0 ? 1 : 0
+        }]}
         onPress={() => {
           navigation.navigate('supplier', {
             supplierId: supplier.id
@@ -103,9 +105,10 @@ class HomeView extends React.Component {
         }}>
           <Image
             style={{
-              height: 100,
-              width: 280,
+              height: 115,
+              width: 340,
               resizeMode: 'contain',
+              marginRight: 5,
             }}
             source={require('../../assets/vpa.png')} />
         </View>
@@ -135,11 +138,11 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: 'white',
     justifyContent: 'center',
-    paddingHorizontal: 50,
-    paddingTop: 30,
+    paddingHorizontal: 20,
   },
   suppliersContainer: {
     flex: 1,
+    marginTop: 10,
   },
   suppliers: {
     alignSelf: 'stretch',
@@ -148,7 +151,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   buttonContainer: {
-    paddingVertical: 30,
+    paddingVertical: 10,
   }
 })
 

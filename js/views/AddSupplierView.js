@@ -41,6 +41,12 @@ class AddSupplierView extends React.Component {
     this.setState({ modalVisible: false })
   }
 
+  focusInput = (ref) => {
+    if (this.refs && this.refs[ref]) {
+      this.refs[ref].focus()
+    }
+  }
+
   render() {
     if (!this.state.isReady) {
       return <Spinner/>
@@ -76,36 +82,58 @@ class AddSupplierView extends React.Component {
           <View style={styles.formContainer}>
             <LabelTextInput
               label={I18n.t('name')}
+              returnKeyType='next'
+              autoFocus={true}
+              required={true}
               onChangeText={(text) => {
                 this.setState({ name: text })
               }}
+              onSubmitEditing={() => {
+                this.focusInput('emailInput')
+              }}
             />
             <LabelTextInput
+              ref='emailInput'
               label={I18n.t('email')}
+              returnKeyType='next'
               autoCapitalize='none'
               keyboardType='email-address'
               onChangeText={(text) => {
                 this.setState({ email: text })
               }}
+              onSubmitEditing={() => {
+                this.focusInput('phoneInput')
+              }}
             />
             <LabelTextInput
+              ref='phoneInput'
               label={I18n.t('phone')}
+              returnKeyType='next'
               autoCapitalize='none'
               keyboardType='phone-pad'
               onChangeText={(text) => {
                 this.setState({ phone: text })
               }}
+              onSubmitEditing={() => {
+                this.focusInput('objectInput')
+              }}
             />
             <LabelTextInput
+              ref='objectInput'
+              returnKeyType='next'
               label={I18n.t('subject')}
               onChangeText={(text) => {
                 this.setState({ subject: text })
               }}
+              onSubmitEditing={() => {
+                this.focusInput('beginningInput')
+              }}
             />
             <LabelTextInput
+              ref='beginningInput'
               label={I18n.t('beginning')}
               multiline={true}
-              autoGrow={true}
+              textArea={true}
               onChangeText={(text) => {
                 this.setState({ beginning: text })
               }}
@@ -113,7 +141,7 @@ class AddSupplierView extends React.Component {
             <LabelTextInput
               label={I18n.t('end')}
               multiline={true}
-              autoGrow={true}
+              textArea={true}
               onChangeText={(text) => {
                 this.setState({ end: text })
               }}
@@ -126,7 +154,6 @@ class AddSupplierView extends React.Component {
             onPress={() => {
               addSupplier(this.state)
                 .then(() => {
-                  console.log('add success')
                   this.setState({
                     success: true,
                     modalVisible: true,
@@ -134,7 +161,6 @@ class AddSupplierView extends React.Component {
                   })
                 })
                 .catch((error) => {
-                  console.warn(error)
                   this.setState({
                     success: false,
                     modalVisible: true,
@@ -155,13 +181,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     justifyContent: 'center',
-    padding: 40,
+    paddingHorizontal: 20,
   },
   formContainer: {
     flex: 1,
   },
   buttonContainer: {
-    marginTop: 30,
+    marginTop: 10,
+    marginBottom: 10,
   }
 })
 

@@ -66,25 +66,40 @@ class AddProductView extends React.Component {
               })
               .catch(error => {
                 console.warn(error)
+                this.closeModal()
               })
           }}
+          errorCallback={() => this.closeModal()}
         />
         <ScrollView>
           <View style={styles.form}>
             <LabelTextInput
               label={I18n.t('name')}
+              autoFocus={true}
+              returnKeyType='next'
+              required={true}
               onChangeText={(text) => {
                 this.setState({ name: text })
+              }}
+              onSubmitEditing={() => {
+                this.categoryInput.focus()
               }}
             />
             <LabelTextInput
               label={I18n.t('category')}
+              ref={(view) => { this.categoryInput = view }}
+              returnKeyType='next'
+              required={true}
               onChangeText={(text) => {
                 this.setState({ category: text })
+              }}
+              onSubmitEditing={() => {
+                this.referenceInput.focus()
               }}
             />
             <LabelTextInput
               label={I18n.t('reference')}
+              ref={(view) => { this.referenceInput = view }}
               onChangeText={(text) => {
                 this.setState({ reference: text })
               }}
@@ -137,7 +152,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     justifyContent: 'center',
-    padding: 40,
+    paddingHorizontal: 20,
   },
   form: {
     flex: 1,
@@ -145,6 +160,7 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: 'row',
     marginTop: 10,
+    marginBottom: 10,
   },
   buttonWrapper: {
     flex: 1,
