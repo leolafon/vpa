@@ -3,7 +3,7 @@
  * leo.lafon@epitech.eu
  */
 
-import { SQLite } from 'expo'
+import * as SQLite from 'expo-sqlite'
 
 const db = SQLite.openDatabase('vpa.db')
 

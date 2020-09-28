@@ -4,8 +4,11 @@
     "description": "Virtual Penguin Assistant",
     "slug": "vpa",
     "privacy": "public",
-    "sdkVersion": "24.0.0",
-    "platforms": ["ios", "android"],
+    "sdkVersion": "35.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/penguin.png",

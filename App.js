@@ -4,8 +4,9 @@
  */
 
 import React from 'react';
-import { Image, Platform } from 'react-native';
-import { Asset, AppLoading } from 'expo'
+import { Image } from 'react-native'
+import { AppLoading } from 'expo'
+import { Asset } from 'expo-asset'
 import { Provider } from 'react-redux'
 import I18n from 'ex-react-native-i18n'
 
